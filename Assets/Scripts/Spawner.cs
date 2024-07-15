@@ -54,5 +54,4 @@ public class Spawner : MonoBehaviour
 
         return position;
     }
-
 }

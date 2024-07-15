@@ -1,8 +1,7 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(ColorChanger))]
-[RequireComponent (typeof(Deactivator))]
+[RequireComponent(typeof(Deactivator))]
 
 public class Block : MonoBehaviour
 {

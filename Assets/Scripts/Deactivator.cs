@@ -21,11 +21,8 @@ public class Deactivator : MonoBehaviour
         int second = 1;
         var wait = new WaitForSeconds(second);
 
-        while (time > 0)
-        {
-            time--;
+        while (time-- > 0)
             yield return wait;
-        }
 
         gameObject.SetActive(false);
     }
