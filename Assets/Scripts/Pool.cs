@@ -14,6 +14,9 @@ public class Pool : MonoBehaviour
 
         Block block = _blocks.Dequeue();
 
+        Deactivator deactivator = block.GetComponent<Deactivator>();
+        deactivator.Died += Enqueue;
+
         return block;
     }
 
@@ -22,13 +25,12 @@ public class Pool : MonoBehaviour
         Block block = Instantiate(_blockPrefab, transform.position, Quaternion.identity);
         _blocks.Enqueue(block);
         block.gameObject.SetActive(false);
-       
-        Deactivator deactivator = block.GetComponent<Deactivator>();
-        deactivator.Died += Enqueue;
     }
 
     private void Enqueue(Block block)
     {
         _blocks.Enqueue(block);
+        Deactivator deactivator = block.GetComponent<Deactivator>();
+        deactivator.Died -= Enqueue;
     }
 }
