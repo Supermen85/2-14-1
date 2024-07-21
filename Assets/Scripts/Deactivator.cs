@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Deactivator : MonoBehaviour 
 {
     [SerializeField] private int _timeToDieMin = 2;
     [SerializeField] private int _timeToDieMax = 5;
+
+    public event Action<Block> Died;
 
     public void Deactivate()
     {
@@ -13,7 +16,7 @@ public class Deactivator : MonoBehaviour
 
     private int GetRandomTime()
     {
-        return Random.Range(_timeToDieMax, _timeToDieMin + 1);
+        return UnityEngine.Random.Range(_timeToDieMax, _timeToDieMin + 1);
     }
 
     private IEnumerator Deactivation(int time)
@@ -25,5 +28,8 @@ public class Deactivator : MonoBehaviour
             yield return wait;
 
         gameObject.SetActive(false);
+
+        Block block = GetComponent<Block>();
+        Died?.Invoke(block);
     }
 }

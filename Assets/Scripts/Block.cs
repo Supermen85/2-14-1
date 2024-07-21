@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(ColorChanger))]
@@ -12,34 +13,29 @@ public class Block : MonoBehaviour
 
     private void OnValidate()
     {
-        if (_colorChanger == null || _colorChanger != GetComponent<ColorChanger>())
-            _colorChanger = GetComponent<ColorChanger>();
-    
-        if (_deactivator == null || _deactivator != GetComponent<Deactivator>())
-            _deactivator = GetComponent<Deactivator>();
+        ColorChanger colorChanger = GetComponent<ColorChanger>();
+        Deactivator deactivator = GetComponent<Deactivator>();
+
+        if (_colorChanger == null || _colorChanger != colorChanger)
+            _colorChanger = colorChanger;
+
+        if (_deactivator == null || _deactivator != deactivator)
+            _deactivator = deactivator;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (isFloorTouched(collision) == false)
-            return;
-
-        ChangeColor();
-        _deactivator.Deactivate();
+        if (collision.transform.GetComponent<Floor>() != null)
+        {
+            ChangeColor();
+            _deactivator.Deactivate();
+        }
     }
 
     public void SetDefault()
     {
         _colorChanger.ChangeColorToDefault();
         _isColorDefault = true;
-    }
-
-    private bool isFloorTouched(Collision collision)
-    {
-        if (collision.transform.GetComponent<Floor>() == null)
-            return false;
-
-        return true;
     }
 
     private void ChangeColor()

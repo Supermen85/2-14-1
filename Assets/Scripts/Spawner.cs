@@ -10,8 +10,10 @@ public class Spawner : MonoBehaviour
 
     private void OnValidate()
     {
-        if (_pool == null || _pool != GetComponent<Pool>())
-            _pool = GetComponent<Pool>();
+        Pool pool = GetComponent<Pool>();
+
+        if (_pool == null || _pool != pool)
+            _pool = pool;
     }
 
     private void Start()
